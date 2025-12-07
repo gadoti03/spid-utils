@@ -58,7 +58,7 @@ Supported operations include:
 1. Enter the `spid_rotator` folder:
    ```bash
    cd spid_rotator
-````
+   ```
 
 2. Install dependencies (virtual environment):
 
