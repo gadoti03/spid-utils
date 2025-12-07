@@ -32,11 +32,8 @@ The goal is to generate a ready-to-publish metadata document for SPID Identity P
 3. Open your browser and navigate to:
 
    ```
-   ```
-
-[http://localhost:8000](http://localhost:8000)
-
-````
+   [http://localhost:8000](http://localhost:8000)
+   ````
 
 ---
 
