@@ -80,5 +80,3 @@ Supported operations include:
    ```
 
    Follow the prompts to manage certificate rotation.
-
----
