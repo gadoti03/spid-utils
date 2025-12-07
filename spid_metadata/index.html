@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Editor Metadata SPID SP</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<h1>Editor Metadata SPID SP</h1>
+
+<div id="editor"></div>
+
+<button id="printJson">Stampa XML Aggiornato</button>
+
+<div id="output-header" style="display: flex; align-items: center; justify-content: space-between; margin: auto; margin-top: 20px;">
+  <h3 style="margin: 0;">Output XML</h3>
+  <div>
+    <button id="copyBtn">Copy</button>
+    <button id="downloadBtn">Download</button>
+  </div>
+</div>
+
+<div id="output-container">
+  <pre id="line-numbers"></pre>
+  <pre id="output">Loading...</pre>
+</div>
+
+<h1>SP Metadata Elements Explanation</h1>
+
+<div class="checkbox-legend">
+  <span>Elements with <strong>checked checkbox</strong> are <em>recommended</em></span>
+  <span>Elements with <strong>unchecked checkbox</strong> are <em>optional</em></span>
+  <span>Elements without checkbox are <em>often unnecessary or used only in specific cases</em></span>
+</div>
+
+<section>
+  <h2>&lt;EntityDescriptor&gt;</h2>
+  <ul>
+    <li><strong>entityID [uri (oid 2.5.4.83)]</strong>: unique URI — <span class="note">must match the ENTITY_ID reported in /certs/docker.env when creating the private key, public certificate, and CSR</span></li>
+    <li><strong>ID</strong>: XML identifier — string uniquely identifying the XML document</li>
+  </ul>
+</section>
+
+<section>
+  <h2>&lt;SPSSODescriptor&gt;</h2>
+  <ul>
+    <li><input type="checkbox" checked disabled> <strong>WantAuthnRequestsSigned</strong>: The SP declares that it signs the AuthnRequests sent to the IdP</li>
+    <li><input type="checkbox" checked disabled> <strong>WantAssertionsSigned</strong>: The SP requires that assertions received from the IdP are signed</li>
+  </ul>
+</section>
+
+<section>
+  <h2>&lt;NameIdFormat&gt;</h2>
+  <p>NameIDFormat indicates the format of the user ID exchanged between IdP and SP.</p>
+  <p><strong>Format:</strong></p>
+  <ul>
+    <li><strong>Persistent</strong>: stable and unique user ID</li>
+    <li><strong>Transient</strong>: temporary ID valid only for that session</li>
+  </ul>
+</section>
+
+<section>
+  <h2>&lt;SingleLogoutService&gt;</h2>
+  <ul>
+    <li><input type="checkbox" checked disabled> <strong>Binding</strong>: method/protocol used for communication</li>
+    <li><input type="checkbox" checked disabled> <strong>Location</strong>: URL endpoint for logout requests</li>
+    <li><input type="checkbox"> <strong>ResponseLocation</strong>: URL where the entity expects the logout response (if different from Location)</li>
+    <li>Multiple SingleLogoutService elements can be present (e.g., multiple endpoints or protocols for logout)</li>
+  </ul>
+</section>
+
+<section>
+  <h2>&lt;AssertionConsumerService&gt;</h2>
+  <ul>
+    <li><input type="checkbox" checked disabled> <strong>Location</strong>: URL endpoint receiving the responses</li>
+    <li><input type="checkbox" checked disabled> <strong>index</strong>: index of this tag (used to associate it with AttributeConsumingService)</li>
+    <li><input type="checkbox"> <strong>isDefault</strong>: indicates the default endpoint</li>
+  </ul>
+  <p><em>At least one of these elements must have: index = 0 and isDefault = true (but there should actually be only one AssertionConsumerService element)</em></p>  
+</section>
+
+<section>
+  <h2>&lt;AttributeConsumingService&gt;</h2>
+  <ul>
+    <li><input type="checkbox" checked disabled> <strong>index</strong>: associates this with the AssertionConsumerService</li>
+  </ul>
+</section>
+
+<section>
+  <h2>&lt;RequestedAttribute&gt;</h2>
+  <p>User data requested during login.</p>
+  <p><strong>NameFormat</strong>: format used to identify the requested attribute name.</p>
+  <ul>
+    <li><code>urn:oasis:names:tc:SAML:2.0:attrname-format:uri</code>: attribute name as a full URI (e.g., https://...)</li>
+    <li><code>urn:oasis:names:tc:SAML:2.0:attrname-format:basic</code>: simple short name (e.g., "email")</li>
+    <li><code>urn:oasis:names:tc:SAML:2.0:attrname-format:unspecified</code>: no specific format</li>
+  </ul>
+</section>
+
+<section>
+  <h2>&lt;Organization&gt;</h2>
+  <ul>
+    <li><input type="checkbox" checked disabled> <strong>&lt;OrganizationName&gt;</strong>: <span class="note">must match the ORGANIZATION_NAME reported in /certs/docker.env during private key creation</span></li>
+    <li><input type="checkbox" checked disabled> <strong>&lt;OrganizationDisplayName&gt;</strong>: <span class="note">must match the ORGANIZATION_IDENTIFIER reported in /certs/docker.env during private key creation</span></li>
+    <li><input type="checkbox" checked disabled> <strong>&lt;OrganizationURL&gt;</strong>: institution’s URL in language-qualified format</li>
+  </ul>
+  <p><em>The elements OrganizationName, OrganizationDisplayName and OrganizationURL MUST have the same number of lang attributes</em></p>
+</section>
+
+<section>
+  <h2>&lt;ContactPerson&gt;</h2>
+  <ul>
+    <li>1 occurrence if SP is PUBLIC (without billing), with <code>contactType="other"</code> (and <code>&lt;Public/&gt;</code> in <code>ContactPerson[@contactType='other']</code>)</li>
+    <li>2 occurrences if SP is PRIVATE (billing), with <code>contactType="other"</code> and <code>contactType="billing"</code> (and <code>&lt;Private/&gt;</code> in <code>ContactPerson[@contactType='other']</code>)</li>
+  </ul>
+  <p><em>The tool <a href="https://demo.spid.gov.it/validator">validator</a> has inaccuracies in the ContactPerson validation (and also requires attributes not added to the following tool)</em></p>
+  <p><em>If the Company element is present it MUST be equal to OrganizationName</em></p>
+
+  <h3>⚠️ Pay attention to the SAML profile of your metadata:</h3>
+
+  <p>The SPID metadata requirements vary depending on your <strong>profile</strong>, which can be one of the following:</p>
+  <ul>
+    <li>Public</li>
+    <li>Private</li>
+    <li>Public Full Aggregator</li>
+    <li>Public Lite Aggregator</li>
+    <li>Public Full Operator</li>
+    <li>Public Lite Operator</li>
+  </ul>
+
+  <h4>Profiles with additional requirements:</h4>
+  <ul>
+    <li>Public Full Aggregator</li>
+    <li>Public Lite Aggregator</li>
+    <li>Public Full Operator</li>
+    <li>Public Lite Operator</li>
+  </ul>
+
+  <p>For these profiles, the <code>&lt;ContactPerson contactType="other"&gt;</code> element requires two additional components:</p>
+
+  <ol>
+    <li>
+      <strong>An additional attribute</strong>:
+      <br>
+      Add the attribute <code>spid:entityType</code> with an appropriate value.
+      <br>
+      Example for a Full Aggregator:
+      <pre><code>spid:entityType="spid:aggregator"</code></pre>
+    </li>
+    <li>
+      <strong>An <code>&lt;Extensions&gt;</code> element</strong> inside <code>&lt;ContactPerson&gt;</code>:
+      <br>
+      This specifies the role/profile.
+    </li>
+  </ol>
+</section>
+
+
+<script src="app.js"></script>
+</body>
+</html>

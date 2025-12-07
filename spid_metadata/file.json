@@ -1,0 +1,272 @@
+{
+  "EntityDescriptor":{
+    "pre": "md",
+    "attributes": {
+      "entityID": { "value": "https://comune-di-roma.it/"},
+      "ID": {"value": "_uniqueID"},
+      "xmlns:md": {"value": "urn:oasis:names:tc:SAML:2.0:metadata" },
+      "xmlns:spid": {"value": "https://spid.gov.it/saml-extensions" },
+      "xmlns:ds": {"value": "http://www.w3.org/2000/09/xmldsig#"},
+      "validUntil": {"selected": false, "value": "2025-12-31T23:59:59Z" },
+      "cacheDuration": {"selected": false, "value": "P1D" }
+    },
+    "SPSSODescriptor": {
+      "pre": "md",
+      "attributes": {
+        "protocolSupportEnumeration": {"value": "urn:oasis:names:tc:SAML:2.0:protocol" },
+        "AuthnRequestsSigned": {"value": "true" },
+        "WantAssertionsSigned": {"value": "true" }        
+      },
+      "SingleLogoutService": {
+        "multiple": true,
+        "list": [{
+          "pre": "md",
+          "attributes": {
+            "Location": { "value": "https://comune-di-roma.it/logout" },
+            "Binding": { "value": "urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST", "options": "urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST|urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect"},
+            "ResponseLocation": { "selected": false, "value": "https://comune-di-roma.it/log-out" }          
+          }
+        }]
+      },
+      "NameIDFormat": {
+        "selected": false,
+        "pre": "md",
+        "value": "urn:oasis:names:tc:SAML:2.0:nameid-format:transient", 
+        "options": "urn:oasis:names:tc:SAML:2.0:nameid-format:transient"
+      },
+      "AssertionConsumerService": {
+        "pre": "md",
+        "attributes": {
+          "index": { "value": "0" },
+          "Binding": { "value": "urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST", "options": "urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST|urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect" },
+          "Location": { "value": "https://comune-di-roma.it/response" } ,
+          "isDefault": { "selected": true, "value": "true" }      
+        }
+      },
+      "AttributeConsumingService": {
+        "multiple": true,
+        "list": [{
+          "pre": "md",
+          "selected": true,
+          "attributes": {
+            "index": { "value": "0" }
+          },
+          "ServiceName": {
+            "pre": "md",
+            "attributes": {
+              "xml:lang": { "value": "it" }
+            },
+            "value": "Servizi online"
+          },
+          "ServiceDescription": {
+            "pre": "md",
+            "attributes": {
+              "xml:lang": { "value": "it" }
+            },
+            "value": "Servizi online"
+          },
+          "RequestedAttribute":{
+            "multiple": true,
+            "pre": "md",
+            "list": [
+              {
+                "pre": "md",
+                "attributes":{
+                  "Name": { "value": "name", "options": "address|companyName|companyFiscalNumber|countyOfBirth|dateOfBirth|digitalAddress|email|expirationDate|familyName|fiscalNumber|gender|idCard|ivaCode|mobilePhone|name|placeOfBirth|registeredOffice|spidCode|domicileStreetAddress|domicilePostalCode|domicileMunicipality|domicileProvince|domicileNation" },
+                  "NameFormat": { "value": "urn:oasis:names:tc:SAML:2.0:attrname-format:basic"},
+                  "FriendlyName": {"value": "Readble Name"},
+                  "isRequired": { "selected": false, "value": "true"}
+                }
+              }
+            ]
+          }
+        }]
+      }
+    },
+    "Organization": {
+      "pre": "md",
+      "selected": true,
+      "OrganizationName": {
+        "multiple": true,
+        "list": [{
+          "pre": "md",
+          "value": "Comune di Roma",
+          "attributes": {
+            "xml:lang": { "value": "it" }
+          }
+        }]
+      },
+      "OrganizationDisplayName": {
+        "multiple": true,
+        "list": [{
+          "pre": "md",
+          "value": "PA:IT-c_h501",
+          "attributes": {
+            "xml:lang": { "value": "it" }
+          }
+        }]
+      },
+      "OrganizationURL": {
+        "multiple": true,
+        "list": [{
+          "pre": "md",
+          "value": "https://comune-di-roma.it/it",
+          "attributes": {
+            "xml:lang": { "value": "it" }
+          }
+        }]
+      }
+    },
+    "ContactPerson": {
+      "list": [
+        {
+          "pre": "md",
+          "attributes": {
+            "contactType": { "value": "other", "options": "other|technical|administrative" }
+          },
+          "Extensions": {
+            "pre": "md",        
+            "IPACode": {
+              "pre": "spid",
+              "value": "c_h501"
+            },
+            "VATNumber": {
+              "pre": "spid",
+              "selected": true,
+              "value": "IT12345678901"
+            },
+            "FiscalCode": {
+              "pre": "spid",
+              "selected": true,
+              "value": "XYZABCAAMGGJ000W"
+            },
+            "Public": {
+              "pre": "spid",
+              "selected": true
+            },
+            "Private": {
+              "pre": "spid",
+              "selected": false
+            }
+          },
+          "Company": {
+            "pre": "md",
+            "selected": true,
+            "value": "Comune di Roma"
+          },
+          "EmailAddress": {
+            "pre": "md",
+            "value": "tech-info@example.org"
+          },
+          "TelephoneNumber": {
+            "selected": true,
+            "pre": "md",
+            "value": "+398472345634785"
+          }
+        },
+        {
+          "pre": "md",
+          "selected": false,
+          "attributes": {
+            "contactType": { "value": "billing" }
+          },
+          "Extensions": {
+            "pre": "md",
+            "attributes": {
+              "xmlns:fpa": { "value": "https://spid.gov.it/invoicing-extensions" }
+            },
+            "CessionarioCommittente": {
+              "pre": "fpa",
+              "DatiAnagrafici": {
+                "pre": "fpa",
+                "IdFiscaleIVA": {
+                  "selected": true,
+                  "pre": "fpa",
+                  "IdPaese": { "pre": "fpa", "value": "IT" },
+                  "IdCodice": { "pre": "fpa", "value": "02468135791" }
+                },
+                "CodiceFiscale": {
+                  "selected": true,
+                  "pre": "fpa",
+                  "value": "AAABBB00C00D000Z"
+                },
+                "Anagrafica": {
+                  "pre": "fpa",
+                  "Denominazione": { 
+                    "pre": "fpa",
+                    "Nome": {
+                      "pre": "fpa",
+                      "value": "Mario"
+                    },
+                    "Cognome": {
+                      "pre": "fpa",
+                      "value": "Rossi"
+                    }
+                  },
+                  "Titolo": {"pre": "fpa", "selected": false, "value": "Titolo"},
+                  "CodiceEORI": {"pre": "fpa", "selected": false, "value": "IT12345678901"}
+                }
+              },
+              "Sede": {
+                "pre": "fpa",
+                "Indirizzo": { "pre": "fpa", "value": "via [...]" },
+                "NumeroCivico": { "pre": "fpa", "value": "99" },
+                "CAP": { "pre": "fpa", "value": "12345" },
+                "Comune": { "pre": "fpa", "value": "nome_citta" },
+                "Provincia": { "pre": "fpa", "value": "XY" },
+                "Nazione": { "pre": "fpa", "value": "IT" }
+              }
+            },
+            "TerzoIntermediarioSoggettoEmittente": {
+              "pre": "fpa",
+              "selected": false,
+              "DatiAnagrafici": {
+                "pre": "fpa",
+                "IdFiscaleIVA": {
+                  "selected": true,
+                  "pre": "fpa",
+                  "IdPaese": { "pre": "fpa", "value": "IT" },
+                  "IdCodice": { "pre": "fpa", "value": "02468135791" }
+                },
+                "CodiceFiscale": {
+                  "selected": true,
+                  "pre": "fpa",
+                  "value": "AAABBB00C00D000Z"
+                },
+                "Anagrafica": {
+                  "pre": "fpa",
+                  "Denominazione": { 
+                    "pre": "fpa",
+                    "Nome": {
+                      "pre": "fpa",
+                      "value": "Mario"
+                    },
+                    "Cognome": {
+                      "pre": "fpa",
+                      "value": "Rossi"
+                    }
+                  },
+                  "Titolo": {"pre": "fpa", "selected": false, "value": "Titolo"},
+                  "CodiceEORI": {"pre": "fpa", "selected": false, "value": "IT12345678901"}
+                }
+              },
+              "Sede": {
+                "pre": "fpa",
+                "Indirizzo": { "pre": "fpa", "value": "via [...]" },
+                "NumeroCivico": { "pre": "fpa", "value": "99" },
+                "CAP": { "pre": "fpa", "value": "12345" },
+                "Comune": { "pre": "fpa", "value": "nome_citta" },
+                "Provincia": { "pre": "fpa", "value": "XY" },
+                "Nazione": { "pre": "fpa", "value": "IT" }
+              }
+            }
+          },
+          "Company": { "selected": true, "pre": "md", "value": "Compagnia_fatture" },
+          "EmailAddress": { "pre": "md", "value": "email@fatturazione.it" },
+          "TelephoneNumber": { "selected": true, "pre": "md", "value": "telefono_fatture" }
+        }
+      ]
+    }
+  }
+}
+
