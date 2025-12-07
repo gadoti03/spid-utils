@@ -82,13 +82,3 @@ Supported operations include:
    Follow the prompts to manage certificate rotation.
 
 ---
-
-## Why this repository exists
-
-SPID requires:
-
-* a valid metadata document
-* valid signing certificates
-* a rotation process that prevents service interruption
-
-This repository offers reusable components to automate those tasks and keep your SPID Service Provider compliant.
